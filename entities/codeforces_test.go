@@ -16,12 +16,12 @@ func TestCodeforcesProblemsetProblem(t *testing.T) {
 		Tags:      []string{"implementation", "graph"},
 	}
 
-	assert.Equal(t, problem.GetID(), "1234A")
-	assert.Equal(t, problem.GetName(), "First Problem")
-	assert.Equal(t, problem.GetRating(), 2100)
-	assert.Equal(t, problem.GetTags()[0], "implementation")
-	assert.Equal(t, problem.GetTags()[1], "graph")
-	assert.Equal(t, problem.GetURL(), "https://codeforces.com/contest/1234/problem/A")
+	assert.Equal(t, "1234A", problem.GetID())
+	assert.Equal(t, "First Problem", problem.GetName())
+	assert.Equal(t, 2100, problem.GetRating())
+	assert.Equal(t, "implementation", problem.GetTags()[0])
+	assert.Equal(t, "graph", problem.GetTags()[1])
+	assert.Equal(t, "https://codeforces.com/contest/1234/problem/A", problem.GetURL())
 }
 
 func TestCodeforcesGymProblem(t *testing.T) {
@@ -32,10 +32,10 @@ func TestCodeforcesGymProblem(t *testing.T) {
 		Tags:      []string{},
 	}
 
-	assert.Equal(t, problem.GetID(), "102640A")
-	assert.Equal(t, problem.GetName(), "First Problem")
+	assert.Equal(t, "102640A", problem.GetID())
+	assert.Equal(t, "First Problem", problem.GetName())
 	assert.Empty(t, problem.GetTags())
-	assert.Equal(t, problem.GetURL(), "https://codeforces.com/gym/102640/problem/A")
+	assert.Equal(t, "https://codeforces.com/gym/102640/problem/A", problem.GetURL())
 }
 
 func TestCodeforcesSubmission(t *testing.T) {
@@ -49,14 +49,14 @@ func TestCodeforcesSubmission(t *testing.T) {
 		Verdict: "OK",
 	}
 
-	assert.Equal(t, acSubmission.GetProblem(), problem)
-	assert.Equal(t, acSubmission.IsAccepted(), true)
+	assert.Equal(t, problem, acSubmission.GetProblem())
+	assert.Equal(t, true, acSubmission.IsAccepted())
 
 	waSubmission := &entities.CodeforcesSubmission{
 		Problem: problem,
 		Verdict: "WRONG_ANSWER",
 	}
 
-	assert.Equal(t, waSubmission.GetProblem(), problem)
-	assert.Equal(t, waSubmission.IsAccepted(), false)
+	assert.Equal(t, problem, waSubmission.GetProblem())
+	assert.Equal(t, false, waSubmission.IsAccepted())
 }
