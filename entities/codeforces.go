@@ -52,12 +52,12 @@ in Codeforces (https://codeforces.com/apiHelp/objects#Submission).
 Some fields are not included because they are not needed.
 */
 type CodeforcesSubmission struct {
-	Problem CodeforcesProblem `json:"problem"`
-	Verdict string            `json:"verdict"`
+	Problem *CodeforcesProblem `json:"problem"`
+	Verdict string             `json:"verdict"`
 }
 
-func (c *CodeforcesSubmission) GetProblemID() string {
-	return c.Problem.GetID()
+func (c *CodeforcesSubmission) GetProblem() *CodeforcesProblem {
+	return c.Problem
 }
 
 func (c *CodeforcesSubmission) IsAccepted() bool {

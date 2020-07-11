@@ -15,7 +15,7 @@ type Problem interface {
 Submission is an interface that represents an online judge submission
 */
 type Submission interface {
-	GetProblemID() string
+	GetProblem() Problem
 	IsAccepted() bool
 }
 
