@@ -43,3 +43,25 @@ func (c *CodeforcesProblem) GetURL() string {
 
 	return fmt.Sprintf(problemsetProblemURLFormat, c.ContestID, c.Index)
 }
+
+/*
+CodeforcesSubmission is a struct that represents a Submission object
+in Codeforces (https://codeforces.com/apiHelp/objects#Submission).
+Some fields are not included because they are not needed.
+*/
+type CodeforcesSubmission struct {
+	Problem CodeforcesProblem
+	Verdict string
+}
+
+func (c *CodeforcesSubmission) GetProblemID() string {
+	return c.Problem.GetID()
+}
+
+func (c *CodeforcesSubmission) IsAccepted() bool {
+	if c.Verdict == "OK" {
+		return true
+	}
+
+	return false
+}

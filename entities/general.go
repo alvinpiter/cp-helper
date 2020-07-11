@@ -10,3 +10,11 @@ type Problem interface {
 	getTags() []string
 	getURL() string
 }
+
+/*
+Submission is an interface that represents an online judge submission
+*/
+type Submission interface {
+	GetProblemID() string
+	IsAccepted() bool
+}

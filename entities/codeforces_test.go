@@ -37,3 +37,26 @@ func TestCodeforcesGymProblem(t *testing.T) {
 	assert.Empty(t, problem.GetTags())
 	assert.Equal(t, problem.GetURL(), "https://codeforces.com/gym/102640/problem/A")
 }
+
+func TestCodeforcesSubmission(t *testing.T) {
+	problem := entities.CodeforcesProblem{
+		ContestID: 1234,
+		Index:     "A",
+	}
+
+	acSubmission := &entities.CodeforcesSubmission{
+		Problem: problem,
+		Verdict: "OK",
+	}
+
+	assert.Equal(t, acSubmission.GetProblemID(), "1234A")
+	assert.Equal(t, acSubmission.IsAccepted(), true)
+
+	waSubmission := &entities.CodeforcesSubmission{
+		Problem: problem,
+		Verdict: "WRONG_ANSWER",
+	}
+
+	assert.Equal(t, waSubmission.GetProblemID(), "1234A")
+	assert.Equal(t, waSubmission.IsAccepted(), false)
+}
