@@ -18,12 +18,3 @@ type Submission interface {
 	GetProblem() Problem
 	IsAccepted() bool
 }
-
-/*
-Repository is an interface that represents an object that communicates with
-online judge API.
-*/
-type Repository interface {
-	GetSubmissions(string) ([]Submission, error)
-	GetProblems() ([]Problem, error)
-}

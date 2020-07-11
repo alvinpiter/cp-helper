@@ -67,3 +67,12 @@ func (c *CodeforcesSubmission) IsAccepted() bool {
 
 	return false
 }
+
+/*
+CodeforcesRepository is a struct that represents an object
+that interacts with Codeforces API
+*/
+type CodeforcesRepository interface {
+	GetProblems() ([]*CodeforcesProblem, error)
+	GetSubmissions(string) ([]*CodeforcesSubmission, error)
+}
