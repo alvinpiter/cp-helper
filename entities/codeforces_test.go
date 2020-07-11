@@ -39,7 +39,7 @@ func TestCodeforcesGymProblem(t *testing.T) {
 }
 
 func TestCodeforcesSubmission(t *testing.T) {
-	problem := entities.CodeforcesProblem{
+	problem := &entities.CodeforcesProblem{
 		ContestID: 1234,
 		Index:     "A",
 	}
@@ -49,7 +49,7 @@ func TestCodeforcesSubmission(t *testing.T) {
 		Verdict: "OK",
 	}
 
-	assert.Equal(t, acSubmission.GetProblemID(), "1234A")
+	assert.Equal(t, acSubmission.GetProblem(), problem)
 	assert.Equal(t, acSubmission.IsAccepted(), true)
 
 	waSubmission := &entities.CodeforcesSubmission{
@@ -57,6 +57,6 @@ func TestCodeforcesSubmission(t *testing.T) {
 		Verdict: "WRONG_ANSWER",
 	}
 
-	assert.Equal(t, waSubmission.GetProblemID(), "1234A")
+	assert.Equal(t, waSubmission.GetProblem(), problem)
 	assert.Equal(t, waSubmission.IsAccepted(), false)
 }

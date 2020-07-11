@@ -25,11 +25,11 @@ func NewCodeforcesRepository() *CodeforcesRepository {
 	}
 }
 
-func (r *CodeforcesRepository) GetSubmissions(handle string) ([]entities.CodeforcesSubmission, error) {
+func (r *CodeforcesRepository) GetSubmissions(handle string) ([]*entities.CodeforcesSubmission, error) {
 	type userStatusResponse struct {
-		Status  string                          `json:"status"`
-		Comment string                          `json:"comment"`
-		Result  []entities.CodeforcesSubmission `json:"result"`
+		Status  string                           `json:"status"`
+		Comment string                           `json:"comment"`
+		Result  []*entities.CodeforcesSubmission `json:"result"`
 	}
 
 	url := fmt.Sprintf("%suser.status?handle=%s", codeforcesAPI, handle)
@@ -53,9 +53,9 @@ func (r *CodeforcesRepository) GetSubmissions(handle string) ([]entities.Codefor
 	return respObj.Result, nil
 }
 
-func (r *CodeforcesRepository) GetProblems() ([]entities.CodeforcesProblem, error) {
+func (r *CodeforcesRepository) GetProblems() ([]*entities.CodeforcesProblem, error) {
 	type problemsetProblemsResultResponse struct {
-		Problems []entities.CodeforcesProblem `json:"problems"`
+		Problems []*entities.CodeforcesProblem `json:"problems"`
 	}
 
 	type problemsetProblemsResponse struct {
