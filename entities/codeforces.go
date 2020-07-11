@@ -1,6 +1,8 @@
 package entities
 
-import "fmt"
+import (
+	"fmt"
+)
 
 var (
 	gymProblemURLFormat        = "https://codeforces.com/gym/%d/problem/%s"
@@ -13,11 +15,11 @@ Codeforces (https://codeforces.com/apiHelp/objects#Problem).
 Some fields are not included because they are not needed.
 */
 type CodeforcesProblem struct {
-	ContestID int
-	Index     string
-	Name      string
-	Rating    int
-	Tags      []string
+	ContestID int      `json:"contestId"`
+	Index     string   `json:"index"`
+	Name      string   `json:"name"`
+	Rating    int      `json:"rating"`
+	Tags      []string `json:"tags"`
 }
 
 func (c *CodeforcesProblem) GetID() string {
@@ -50,8 +52,8 @@ in Codeforces (https://codeforces.com/apiHelp/objects#Submission).
 Some fields are not included because they are not needed.
 */
 type CodeforcesSubmission struct {
-	Problem CodeforcesProblem
-	Verdict string
+	Problem CodeforcesProblem `json:"problem"`
+	Verdict string            `json:"verdict"`
 }
 
 func (c *CodeforcesSubmission) GetProblemID() string {
