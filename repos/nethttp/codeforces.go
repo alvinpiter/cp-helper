@@ -25,7 +25,7 @@ func NewCodeforcesRepository() *CodeforcesRepository {
 	}
 }
 
-func (r *CodeforcesRepository) GetSubmissions(handle string) ([]*entities.CodeforcesSubmission, error) {
+func (r *CodeforcesRepository) GetSubmissions(handle string) ([]entities.Submission, error) {
 	type userStatusResponse struct {
 		Status  string                           `json:"status"`
 		Comment string                           `json:"comment"`
@@ -50,10 +50,15 @@ func (r *CodeforcesRepository) GetSubmissions(handle string) ([]*entities.Codefo
 		return nil, errors.New(respObj.Comment)
 	}
 
-	return respObj.Result, nil
+	submissions := []entities.Submission{}
+	for _, s := range respObj.Result {
+		submissions = append(submissions, s)
+	}
+
+	return submissions, nil
 }
 
-func (r *CodeforcesRepository) GetProblems() ([]*entities.CodeforcesProblem, error) {
+func (r *CodeforcesRepository) GetProblems() ([]entities.Problem, error) {
 	type problemsetProblemsResultResponse struct {
 		Problems []*entities.CodeforcesProblem `json:"problems"`
 	}
@@ -82,5 +87,10 @@ func (r *CodeforcesRepository) GetProblems() ([]*entities.CodeforcesProblem, err
 		return nil, errors.New(respObj.Comment)
 	}
 
-	return respObj.Result.Problems, nil
+	problems := []entities.Problem{}
+	for _, p := range respObj.Result.Problems {
+		problems = append(problems, p)
+	}
+
+	return problems, nil
 }

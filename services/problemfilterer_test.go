@@ -71,7 +71,7 @@ func TestApplyProblemFilter(t *testing.T) {
 		},
 	}
 
-	cfRepo := new(mocks.CodeforcesRepository)
+	cfRepo := new(mocks.Repository)
 	svc := services.NewService(cfRepo)
 
 	result1 := svc.ApplyProblemFilter(problems, filter1)

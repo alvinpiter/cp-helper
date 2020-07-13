@@ -39,9 +39,9 @@ func TestGetAcceptedProblemsSuccess(t *testing.T) {
 		Verdict: "WRONG_ANSWER",
 	}
 
-	submissions := []*entities.CodeforcesSubmission{submission1, submission2, submission3}
+	submissions := []entities.Submission{submission1, submission2, submission3}
 
-	cfRepo := new(mocks.CodeforcesRepository)
+	cfRepo := new(mocks.Repository)
 	cfRepo.On("GetSubmissions", handle).Return(submissions, nil)
 
 	svc := services.NewService(cfRepo)
@@ -56,7 +56,7 @@ func TestGetAcceptedProblemsWithInvalidOj(t *testing.T) {
 	oj := "uva"
 	handle := "alvinpiter"
 
-	cfRepo := new(mocks.CodeforcesRepository)
+	cfRepo := new(mocks.Repository)
 
 	svc := services.NewService(cfRepo)
 
