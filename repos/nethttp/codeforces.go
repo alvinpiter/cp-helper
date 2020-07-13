@@ -1,3 +1,9 @@
+/*
+TODO:
+* DRY it
+* Find a better way to convert *CodeforcesSubmission to Submission
+*/
+
 package nethttp
 
 import (
