@@ -56,7 +56,7 @@ type CodeforcesSubmission struct {
 	Verdict string             `json:"verdict"`
 }
 
-func (c *CodeforcesSubmission) GetProblem() *CodeforcesProblem {
+func (c *CodeforcesSubmission) GetProblem() Problem {
 	return c.Problem
 }
 
@@ -66,13 +66,4 @@ func (c *CodeforcesSubmission) IsAccepted() bool {
 	}
 
 	return false
-}
-
-/*
-CodeforcesRepository is a struct that represents an object
-that interacts with Codeforces API
-*/
-type CodeforcesRepository interface {
-	GetProblems() ([]*CodeforcesProblem, error)
-	GetSubmissions(string) ([]*CodeforcesSubmission, error)
 }

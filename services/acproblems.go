@@ -7,7 +7,7 @@ import (
 )
 
 func (s *Service) GetAcceptedProblems(oj, handle string) ([]entities.Problem, error) {
-	var submissions []*entities.CodeforcesSubmission
+	var submissions []entities.Submission
 	var err error
 
 	switch oj {
