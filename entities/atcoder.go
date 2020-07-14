@@ -20,7 +20,12 @@ func (p *AtCoderProblem) GetName() string {
 }
 
 func (p *AtCoderProblem) GetRating() int {
-	return int(p.Difficulty)
+	rating := int(p.Difficulty)
+	if rating < 0 {
+		return 0
+	}
+
+	return rating
 }
 
 func (p *AtCoderProblem) GetTags() []string {

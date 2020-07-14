@@ -20,6 +20,9 @@ func TestAtCoderProblem(t *testing.T) {
 	assert.Equal(t, 1234, problem.GetRating())
 	assert.Equal(t, 0, len(problem.GetTags()))
 	assert.Equal(t, "https://atcoder.jp/contests/abc001/tasks/abc001_1", problem.GetURL())
+
+	problem.Difficulty = -1
+	assert.Equal(t, 0, problem.GetRating())
 }
 
 func TestAtCoderSubmission(t *testing.T) {
