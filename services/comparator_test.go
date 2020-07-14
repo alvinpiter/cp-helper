@@ -55,7 +55,8 @@ func TestCompare(t *testing.T) {
 	cfRepo.On("GetSubmissions", handle1).Return(submissions1, nil)
 	cfRepo.On("GetSubmissions", handle2).Return(submissions2, nil)
 
-	svc := services.NewService(cfRepo)
+	svc := services.NewService()
+	svc.CodeforcesRepo = cfRepo
 
 	result, _ := svc.Compare("codeforces", handle1, handle2)
 
