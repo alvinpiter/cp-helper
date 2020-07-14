@@ -7,11 +7,15 @@ import (
 
 type Service struct {
 	CodeforcesRepo entities.Repository
+	AtCoderRepo    entities.Repository
 }
 
 func NewService() *Service {
 	cfRepo := nethttp.NewCodeforcesRepository()
+	atcRepo := nethttp.NewAtCoderRespository()
+
 	return &Service{
 		CodeforcesRepo: cfRepo,
+		AtCoderRepo:    atcRepo,
 	}
 }

@@ -13,6 +13,8 @@ func (s *Service) GetAcceptedProblems(oj, handle string) ([]entities.Problem, er
 	switch oj {
 	case "codeforces":
 		submissions, err = s.CodeforcesRepo.GetSubmissions(handle)
+	case "atcoder":
+		submissions, err = s.AtCoderRepo.GetSubmissions(handle)
 	default:
 		return nil, errors.New("Unknown online judge")
 	}

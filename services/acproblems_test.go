@@ -10,7 +10,7 @@ import (
 	"github.com/alvinpiter/cp-helper/entities/mocks"
 )
 
-func TestGetAcceptedProblemsSuccess(t *testing.T) {
+func TestGetAcceptedProblemsCodeforces(t *testing.T) {
 	oj := "codeforces"
 	handle := "alvinpiter"
 
@@ -51,6 +51,42 @@ func TestGetAcceptedProblemsSuccess(t *testing.T) {
 
 	assert.Equal(t, 1, len(result))
 	assert.Equal(t, "1A", result[0].GetID())
+}
+
+func TestGetAcceptedProblemsAtCoder(t *testing.T) {
+	oj := "atcoder"
+	handle := "alvinpiter"
+
+	problem1 := &entities.AtCoderProblem{ID: "atc1"}
+	problem2 := &entities.AtCoderProblem{ID: "atc2"}
+
+	submission1 := &entities.AtCoderSubmission{
+		Problem: problem1,
+		Result:  "AC",
+	}
+
+	submission2 := &entities.AtCoderSubmission{
+		Problem: problem1,
+		Result:  "AC",
+	}
+
+	submission3 := &entities.AtCoderSubmission{
+		Problem: problem2,
+		Result:  "TLE",
+	}
+
+	submissions := []entities.Submission{submission1, submission2, submission3}
+
+	atcRepo := new(mocks.Repository)
+	atcRepo.On("GetSubmissions", handle).Return(submissions, nil)
+
+	svc := services.NewService()
+	svc.AtCoderRepo = atcRepo
+
+	result, _ := svc.GetAcceptedProblems(oj, handle)
+
+	assert.Equal(t, 1, len(result))
+	assert.Equal(t, "atc1", result[0].GetID())
 }
 
 func TestGetAcceptedProblemsWithInvalidOj(t *testing.T) {
