@@ -30,3 +30,21 @@ func (p *AtCoderProblem) GetTags() []string {
 func (p *AtCoderProblem) GetURL() string {
 	return fmt.Sprintf(problemURLFormat, p.ContestID, p.ID)
 }
+
+type AtCoderSubmission struct {
+	ProblemID string `json:"problem_id"`
+	Problem   *AtCoderProblem
+	Result    string `json:"result"`
+}
+
+func (s *AtCoderSubmission) GetProblem() Problem {
+	return s.Problem
+}
+
+func (s *AtCoderSubmission) IsAccepted() bool {
+	if s.Result == "AC" {
+		return true
+	}
+
+	return false
+}

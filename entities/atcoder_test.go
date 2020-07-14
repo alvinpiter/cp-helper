@@ -21,3 +21,30 @@ func TestAtCoderProblem(t *testing.T) {
 	assert.Equal(t, 0, len(problem.GetTags()))
 	assert.Equal(t, "https://atcoder.jp/contests/abc001/tasks/abc001_1", problem.GetURL())
 }
+
+func TestAtCoderSubmission(t *testing.T) {
+	problem := &entities.AtCoderProblem{
+		ID:         "abc001_1",
+		ContestID:  "abc001",
+		Title:      "Problem 1",
+		Difficulty: 1234.85,
+	}
+
+	acSubmission := &entities.AtCoderSubmission{
+		ProblemID: problem.ID,
+		Problem:   problem,
+		Result:    "AC",
+	}
+
+	assert.Equal(t, problem, acSubmission.GetProblem())
+	assert.Equal(t, true, acSubmission.IsAccepted())
+
+	tleSubmission := &entities.AtCoderSubmission{
+		ProblemID: problem.ID,
+		Problem:   problem,
+		Result:    "TLE",
+	}
+
+	assert.Equal(t, problem, tleSubmission.GetProblem())
+	assert.Equal(t, false, tleSubmission.IsAccepted())
+}
