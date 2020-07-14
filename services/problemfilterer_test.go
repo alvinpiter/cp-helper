@@ -72,7 +72,8 @@ func TestApplyProblemFilter(t *testing.T) {
 	}
 
 	cfRepo := new(mocks.Repository)
-	svc := services.NewService(cfRepo)
+	svc := services.NewService()
+	svc.CodeforcesRepo = cfRepo
 
 	result1 := svc.ApplyProblemFilter(problems, filter1)
 	assert.Equal(t, 2, len(result1))

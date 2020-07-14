@@ -44,7 +44,8 @@ func TestGetAcceptedProblemsSuccess(t *testing.T) {
 	cfRepo := new(mocks.Repository)
 	cfRepo.On("GetSubmissions", handle).Return(submissions, nil)
 
-	svc := services.NewService(cfRepo)
+	svc := services.NewService()
+	svc.CodeforcesRepo = cfRepo
 
 	result, _ := svc.GetAcceptedProblems(oj, handle)
 
@@ -58,7 +59,8 @@ func TestGetAcceptedProblemsWithInvalidOj(t *testing.T) {
 
 	cfRepo := new(mocks.Repository)
 
-	svc := services.NewService(cfRepo)
+	svc := services.NewService()
+	svc.CodeforcesRepo = cfRepo
 
 	_, err := svc.GetAcceptedProblems(oj, handle)
 
