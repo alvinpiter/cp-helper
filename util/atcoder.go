@@ -26,11 +26,12 @@ and it has response like:
 	}
 }
 
-With this method, we intend to merge those responses and returns a slice of AtCoderProblem.
+With this method, we intend to merge those responses and returns a nap of AtCoderProblems.
+The map's key is the problem ID.
 */
 
-func MergeAtCoderProblemResponse(problems []*entities.AtCoderProblem, problemDifficulty map[string]entities.AtCoderProblemDifficulty) []entities.Problem {
-	result := []entities.Problem{}
+func MergeAtCoderProblemResponse(problems []*entities.AtCoderProblem, problemDifficulty map[string]entities.AtCoderProblemDifficulty) map[string]entities.Problem {
+	result := make(map[string]entities.Problem)
 
 	for _, problem := range problems {
 		difficulty, exist := problemDifficulty[problem.GetID()]
@@ -38,7 +39,7 @@ func MergeAtCoderProblemResponse(problems []*entities.AtCoderProblem, problemDif
 			problem.Difficulty = difficulty.Difficulty
 		}
 
-		result = append(result, problem)
+		result[problem.GetID()] = problem
 	}
 
 	return result

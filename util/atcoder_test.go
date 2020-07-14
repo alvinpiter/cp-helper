@@ -27,11 +27,7 @@ func TestMergeAtCoderProblemResponse(t *testing.T) {
 	result := util.MergeAtCoderProblemResponse(problems, problemDifficulty)
 
 	assert.Equal(t, 3, len(result))
-	assert.Equal(t, "abc1", result[0].GetID())
-	assert.Equal(t, 4321, result[0].GetRating())
-	assert.Equal(t, "abc2", result[1].GetID())
-	assert.Equal(t, 1234, result[1].GetRating())
-	assert.Equal(t, "abc3", result[2].GetID())
-	assert.Equal(t, 0, result[2].GetRating())
-
+	assert.Equal(t, 4321, result["abc1"].GetRating())
+	assert.Equal(t, 1234, result["abc2"].GetRating())
+	assert.Equal(t, 0, result["abc3"].GetRating())
 }
