@@ -5,10 +5,10 @@ import "fmt"
 var problemURLFormat = "https://atcoder.jp/contests/%s/tasks/%s"
 
 type AtCoderProblem struct {
-	ID         string  `json:"id"`
-	ContestID  string  `json:"contest_id"`
-	Title      string  `json:"title"`
-	Difficulty float64 `json:"difficulty"`
+	ID         string `json:"id"`
+	ContestID  string `json:"contest_id"`
+	Title      string `json:"title"`
+	Difficulty float64
 }
 
 func (p *AtCoderProblem) GetID() string {
@@ -29,6 +29,10 @@ func (p *AtCoderProblem) GetTags() []string {
 
 func (p *AtCoderProblem) GetURL() string {
 	return fmt.Sprintf(problemURLFormat, p.ContestID, p.ID)
+}
+
+type AtCoderProblemDifficulty struct {
+	Difficulty float64 `json:"difficulty"`
 }
 
 type AtCoderSubmission struct {
