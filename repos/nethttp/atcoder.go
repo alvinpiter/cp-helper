@@ -74,3 +74,34 @@ func (r *AtCoderRepository) GetProblems() ([]entities.Problem, error) {
 
 	return result, nil
 }
+
+func (r *AtCoderRepository) GetSubmissions(handle string) ([]entities.Submission, error) {
+	if len(r.Problems) == 0 {
+		err := r.cacheProblems()
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	url := fmt.Sprintf("%satcoder-api/results?user=%s", atcoderAPI, handle)
+
+	resp, err := r.Client.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	submissions := []*entities.AtCoderSubmission{}
+	decoder := json.NewDecoder(resp.Body)
+	err = decoder.Decode(&submissions)
+	if err != nil {
+		return nil, err
+	}
+
+	subs := []entities.Submission{}
+	for _, sub := range submissions {
+		sub.Problem = r.Problems[sub.ProblemID].(*entities.AtCoderProblem)
+		subs = append(subs, sub)
+	}
+
+	return subs, nil
+}
