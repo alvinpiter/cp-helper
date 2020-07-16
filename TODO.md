@@ -15,3 +15,6 @@
 - Is it really necessary to separate AtCoderFilterParameter and CodeforcesFilterParameter?
 - Define error wrapper? For example look at util/request.go. Maybe it is better
 to compare error object than error message.
+- Find a better way to perform validation
+- Find a better way to handle unmarshal error
+- Gitlab CI. Automate the deployment.
