@@ -66,10 +66,7 @@ type AtCoderFilterParameter struct {
 }
 
 func (a *AtCoderFilterParameter) GetTagsFilterParameter() *TagsFilterParameter {
-	return &TagsFilterParameter{
-		Mode:   "and",
-		Values: []string{},
-	}
+	return nil
 }
 
 func (a *AtCoderFilterParameter) GetRatingFilterParameter() *RatingFilterParameter {
