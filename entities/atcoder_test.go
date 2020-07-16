@@ -51,3 +51,20 @@ func TestAtCoderSubmission(t *testing.T) {
 	assert.Equal(t, problem, tleSubmission.GetProblem())
 	assert.Equal(t, false, tleSubmission.IsAccepted())
 }
+
+func TestAtCoderFilterParameter(t *testing.T) {
+	low := 1000
+	high := 2000
+
+	ratingFilter := &entities.RatingFilterParameter{
+		Minimum: &low,
+		Maximum: &high,
+	}
+
+	atcFilterParameter := &entities.AtCoderFilterParameter{
+		RatingFilter: ratingFilter,
+	}
+
+	//TODO: Assert tag filter is nil
+	assert.Equal(t, ratingFilter, atcFilterParameter.GetRatingFilterParameter())
+}
