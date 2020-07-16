@@ -29,13 +29,13 @@ type Repository interface {
 }
 
 type RatingFilterParameter struct {
-	Minimum int
-	Maximum int
+	Minimum int `json:"minimum"`
+	Maximum int `json:"maximum"`
 }
 
 type TagsFilterParameter struct {
-	Mode   string
-	Values []string
+	Mode   string   `json:"mode"`
+	Values []string `json:"values"`
 }
 
 type FilterParameter interface {
