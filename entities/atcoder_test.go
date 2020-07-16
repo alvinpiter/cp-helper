@@ -51,3 +51,18 @@ func TestAtCoderSubmission(t *testing.T) {
 	assert.Equal(t, problem, tleSubmission.GetProblem())
 	assert.Equal(t, false, tleSubmission.IsAccepted())
 }
+
+func TestAtCoderFilterParameter(t *testing.T) {
+	ratingFilter := &entities.RatingFilterParameter{
+		Minimum: 1000,
+		Maximum: 2000,
+	}
+
+	atcFilterParameter := &entities.AtCoderFilterParameter{
+		RatingFilter: ratingFilter,
+	}
+
+	assert.Equal(t, "and", atcFilterParameter.GetTagsFilterParameter().Mode)
+	assert.Equal(t, 0, len(atcFilterParameter.GetTagsFilterParameter().Values))
+	assert.Equal(t, ratingFilter, atcFilterParameter.GetRatingFilterParameter())
+}

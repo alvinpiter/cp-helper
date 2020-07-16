@@ -27,3 +27,24 @@ type Repository interface {
 	GetProblems() ([]Problem, error)
 	GetSubmissions(string) ([]Submission, error)
 }
+
+type RatingFilterParameter struct {
+	Minimum int
+	Maximum int
+}
+
+type TagsFilterParameter struct {
+	Mode   string
+	Values []string
+}
+
+type FilterParameter interface {
+	GetRatingFilterParameter() *RatingFilterParameter
+	GetTagsFilterParameter() *TagsFilterParameter
+}
+
+type RequestParameter struct {
+	Handle      string          `json:"handle"`
+	RivalHandle string          `json:"rival_handle"`
+	Filter      FilterParameter `json:"filter"`
+}

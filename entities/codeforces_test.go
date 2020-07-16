@@ -60,3 +60,23 @@ func TestCodeforcesSubmission(t *testing.T) {
 	assert.Equal(t, problem, waSubmission.GetProblem())
 	assert.Equal(t, false, waSubmission.IsAccepted())
 }
+
+func TestCodeforcesFilterParameter(t *testing.T) {
+	tagsFilter := &entities.TagsFilterParameter{
+		Mode:   "and",
+		Values: []string{"implementation"},
+	}
+
+	ratingFilter := &entities.RatingFilterParameter{
+		Minimum: 1000,
+		Maximum: 2000,
+	}
+
+	cfFilterParameter := &entities.CodeforcesFilterParameter{
+		TagsFilter:   tagsFilter,
+		RatingFilter: ratingFilter,
+	}
+
+	assert.Equal(t, tagsFilter, cfFilterParameter.GetTagsFilterParameter())
+	assert.Equal(t, ratingFilter, cfFilterParameter.GetRatingFilterParameter())
+}
