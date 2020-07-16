@@ -30,19 +30,19 @@ func (s *Service) Compare(oj, handle1, handle2 string) ([]entities.Problem, erro
 		return nil, err
 	}
 
-	acProblemIds1 := []string{}
+	acProblemIdsMap1 := make(map[string]bool)
 	for _, p := range acProblems1 {
-		acProblemIds1 = append(acProblemIds1, p.GetID())
+		acProblemIdsMap1[p.GetID()] = true
 	}
 
-	filter := map[string]interface{}{
-		"id": map[string]interface{}{
-			"mode":   "exclude",
-			"values": acProblemIds1,
-		},
+	diffs := []entities.Problem{}
+	for _, p := range acProblems2 {
+		if _, exist := acProblemIdsMap1[p.GetID()]; exist == false {
+			diffs = append(diffs, p)
+		}
 	}
 
-	return s.ApplyProblemFilter(acProblems2, filter), nil
+	return diffs, nil
 }
 
 func (s *Service) getAcceptedProblemsConcurrently(oj, handle string, ch chan channelItem) {
