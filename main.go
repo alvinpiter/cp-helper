@@ -9,6 +9,7 @@ import (
 
 func main() {
 	http.HandleFunc("/codeforces-problem-tags", handlers.GetCodeforcesProblemTags)
+	http.HandleFunc("/compare-codeforces", handlers.CompareCodeforces)
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
