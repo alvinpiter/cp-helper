@@ -83,3 +83,7 @@ func (c *CodeforcesFilterParameter) GetTagsFilterParameter() *TagsFilterParamete
 func (c *CodeforcesFilterParameter) GetRatingFilterParameter() *RatingFilterParameter {
 	return c.RatingFilter
 }
+
+type CodeforcesProblemTagsResponse struct {
+	ProblemTags []string `json:"problem_tags"`
+}
