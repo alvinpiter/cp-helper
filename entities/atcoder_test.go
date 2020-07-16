@@ -53,9 +53,12 @@ func TestAtCoderSubmission(t *testing.T) {
 }
 
 func TestAtCoderFilterParameter(t *testing.T) {
+	low := 1000
+	high := 2000
+
 	ratingFilter := &entities.RatingFilterParameter{
-		Minimum: 1000,
-		Maximum: 2000,
+		Minimum: &low,
+		Maximum: &high,
 	}
 
 	atcFilterParameter := &entities.AtCoderFilterParameter{

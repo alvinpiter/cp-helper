@@ -29,45 +29,45 @@ func TestApplyProblemFilter(t *testing.T) {
 		ContestID: 1,
 		Index:     "C",
 		Rating:    2100,
-		Tags:      []string{"implementation", "math"},
-	}
-
-	problem4 := &entities.CodeforcesProblem{
-		ContestID: 1,
-		Index:     "D",
-		Rating:    2000,
 		Tags:      []string{"implementation"},
 	}
 
-	problems := []entities.Problem{problem1, problem2, problem3, problem4}
+	problems := []entities.Problem{problem1, problem2, problem3}
 
-	filter1 := map[string]interface{}{
-		"rating": map[string]int{
-			"minimum": 2000,
-			"maximum": 2100,
+	low := 1900
+	high := 2000
+
+	filter1 := &entities.CodeforcesFilterParameter{
+		TagsFilter: &entities.TagsFilterParameter{
+			Mode:   "and",
+			Values: []string{"implementation", "math"},
 		},
-		"id": map[string]interface{}{
-			"mode":   "exclude",
-			"values": []string{"1B"},
-		},
-		"tag": map[string]interface{}{
-			"mode":   "or",
-			"values": []string{"implementation", "math"},
+		RatingFilter: &entities.RatingFilterParameter{
+			Maximum: &low,
 		},
 	}
 
-	filter2 := map[string]interface{}{
-		"rating": map[string]int{
-			"minimum": 2000,
-			"maximum": 2100,
+	filter2 := &entities.CodeforcesFilterParameter{
+		TagsFilter: &entities.TagsFilterParameter{
+			Mode:   "and",
+			Values: []string{"implementation", "math"},
 		},
-		"id": map[string]interface{}{
-			"mode":   "exclude",
-			"values": []string{"1B"},
+		RatingFilter: &entities.RatingFilterParameter{
+			Minimum: &high,
 		},
-		"tag": map[string]interface{}{
-			"mode":   "and",
-			"values": []string{"implementation", "math"},
+	}
+
+	filter3 := &entities.CodeforcesFilterParameter{
+		TagsFilter: &entities.TagsFilterParameter{
+			Mode:   "or",
+			Values: []string{"implementation", "math"},
+		},
+	}
+
+	filter4 := &entities.CodeforcesFilterParameter{
+		RatingFilter: &entities.RatingFilterParameter{
+			Minimum: &low,
+			Maximum: &high,
 		},
 	}
 
@@ -76,11 +76,21 @@ func TestApplyProblemFilter(t *testing.T) {
 	svc.CodeforcesRepo = cfRepo
 
 	result1 := svc.ApplyProblemFilter(problems, filter1)
-	assert.Equal(t, 2, len(result1))
-	assert.Equal(t, "1C", result1[0].GetID())
-	assert.Equal(t, "1D", result1[1].GetID())
+	assert.Equal(t, 1, len(result1))
+	assert.Equal(t, "1A", result1[0].GetID())
 
 	result2 := svc.ApplyProblemFilter(problems, filter2)
 	assert.Equal(t, 1, len(result2))
-	assert.Equal(t, "1C", result2[0].GetID())
+	assert.Equal(t, "1B", result2[0].GetID())
+
+	result3 := svc.ApplyProblemFilter(problems, filter3)
+	assert.Equal(t, 3, len(result3))
+	assert.Equal(t, "1A", result3[0].GetID())
+	assert.Equal(t, "1B", result3[1].GetID())
+	assert.Equal(t, "1C", result3[2].GetID())
+
+	result4 := svc.ApplyProblemFilter(problems, filter4)
+	assert.Equal(t, 2, len(result4))
+	assert.Equal(t, "1A", result4[0].GetID())
+	assert.Equal(t, "1B", result4[1].GetID())
 }

@@ -67,9 +67,11 @@ func TestCodeforcesFilterParameter(t *testing.T) {
 		Values: []string{"implementation"},
 	}
 
+	low := 1000
+	high := 2000
 	ratingFilter := &entities.RatingFilterParameter{
-		Minimum: 1000,
-		Maximum: 2000,
+		Minimum: &low,
+		Maximum: &high,
 	}
 
 	cfFilterParameter := &entities.CodeforcesFilterParameter{
