@@ -12,3 +12,6 @@
 - Integration tests
 - Is it okay to define a struct inside a func? For example look at codeforces repository
 - Refactor the repo package.
+- Is it really necessary to separate AtCoderFilterParameter and CodeforcesFilterParameter?
+- Define error wrapper? For example look at util/request.go. Maybe it is better
+to compare error object than error message.
