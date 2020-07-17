@@ -38,6 +38,10 @@ func TestCompare(t *testing.T) {
 			Problem:    problem3,
 			IsAccepted: true,
 		},
+		entities.Submission{
+			Problem:    problem3,
+			IsAccepted: true,
+		},
 	}
 
 	cfRepo := new(mocks.Repository)
@@ -51,4 +55,7 @@ func TestCompare(t *testing.T) {
 
 	assert.Equal(t, 1, len(result))
 	assert.Equal(t, "1C", result[0].ID)
+
+	_, err := svc.Compare("uva", handle1, handle2)
+	assert.NotNil(t, err)
 }

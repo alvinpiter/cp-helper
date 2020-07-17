@@ -13,7 +13,7 @@ import (
 
 type FilterFunc func(entities.Problem) bool
 
-func (s *Service) ApplyProblemFilter(problems []entities.Problem, fp entities.FilterParameter) []entities.Problem {
+func (s *Service) ApplyProblemFilter(problems []entities.Problem, fp *entities.FilterParameter) []entities.Problem {
 	filterFunc := filterFuncBuilder(fp)
 	return doApplyProblemFilter(problems, filterFunc)
 }
@@ -29,17 +29,15 @@ func doApplyProblemFilter(problems []entities.Problem, filterFunc FilterFunc) []
 	return result
 }
 
-func filterFuncBuilder(fp entities.FilterParameter) FilterFunc {
+func filterFuncBuilder(fp *entities.FilterParameter) FilterFunc {
 	funcs := []FilterFunc{}
 
-	ratingFilter := fp.GetRatingFilterParameter()
-	if ratingFilter != nil {
-		funcs = append(funcs, ratingFilterFuncBuilder(ratingFilter))
+	if fp.Rating != nil {
+		funcs = append(funcs, ratingFilterFuncBuilder(fp.Rating))
 	}
 
-	tagsFilter := fp.GetTagsFilterParameter()
-	if tagsFilter != nil {
-		funcs = append(funcs, tagsFilterFuncBuilder(tagsFilter))
+	if fp.Tags != nil {
+		funcs = append(funcs, tagsFilterFuncBuilder(fp.Tags))
 	}
 
 	return func(p entities.Problem) bool {

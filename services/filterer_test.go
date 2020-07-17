@@ -34,35 +34,35 @@ func TestApplyProblemFilter(t *testing.T) {
 	low := 1900
 	high := 2000
 
-	filter1 := &entities.CodeforcesFilterParameter{
-		TagsFilter: &entities.TagsFilterParameter{
+	filter1 := &entities.FilterParameter{
+		Tags: &entities.TagsFilterParameter{
 			Mode:   "and",
 			Values: []string{"implementation", "math"},
 		},
-		RatingFilter: &entities.RatingFilterParameter{
+		Rating: &entities.RatingFilterParameter{
 			Maximum: &low,
 		},
 	}
 
-	filter2 := &entities.CodeforcesFilterParameter{
-		TagsFilter: &entities.TagsFilterParameter{
+	filter2 := &entities.FilterParameter{
+		Tags: &entities.TagsFilterParameter{
 			Mode:   "and",
 			Values: []string{"implementation", "math"},
 		},
-		RatingFilter: &entities.RatingFilterParameter{
+		Rating: &entities.RatingFilterParameter{
 			Minimum: &high,
 		},
 	}
 
-	filter3 := &entities.CodeforcesFilterParameter{
-		TagsFilter: &entities.TagsFilterParameter{
+	filter3 := &entities.FilterParameter{
+		Tags: &entities.TagsFilterParameter{
 			Mode:   "or",
 			Values: []string{"implementation", "math"},
 		},
 	}
 
-	filter4 := &entities.CodeforcesFilterParameter{
-		RatingFilter: &entities.RatingFilterParameter{
+	filter4 := &entities.FilterParameter{
+		Rating: &entities.RatingFilterParameter{
 			Minimum: &low,
 			Maximum: &high,
 		},

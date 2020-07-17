@@ -1,6 +1,10 @@
 package services
 
-import "github.com/alvinpiter/cp-helper/entities"
+import (
+	"errors"
+
+	"github.com/alvinpiter/cp-helper/entities"
+)
 
 type channelItem struct {
 	Data  []entities.Problem
@@ -46,9 +50,41 @@ func (s *Service) Compare(oj, handle1, handle2 string) ([]entities.Problem, erro
 }
 
 func (s *Service) getAcceptedProblemsConcurrently(oj, handle string, ch chan channelItem) {
-	problems, err := s.GetAcceptedProblems(oj, handle)
+	problems, err := s.getAcceptedProblems(oj, handle)
 	ch <- channelItem{
 		problems,
 		err,
 	}
+}
+
+func (s *Service) getAcceptedProblems(oj, handle string) ([]entities.Problem, error) {
+	var submissions []entities.Submission
+	var err error
+
+	switch oj {
+	case "codeforces":
+		submissions, err = s.CodeforcesRepo.GetSubmissions(handle)
+	case "atcoder":
+		submissions, err = s.AtCoderRepo.GetSubmissions(handle)
+	default:
+		return nil, errors.New("Unknown online judge")
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	acProblems := []entities.Problem{}
+	seenID := make(map[string]bool) //To avoid duplicates
+	for _, submission := range submissions {
+		if submission.IsAccepted {
+			problemID := submission.Problem.ID
+			if _, seen := seenID[problemID]; !seen {
+				acProblems = append(acProblems, submission.Problem)
+				seenID[problemID] = true
+			}
+		}
+	}
+
+	return acProblems, nil
 }
