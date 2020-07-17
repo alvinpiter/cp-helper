@@ -28,7 +28,7 @@ func NormalizeCompareRequest(r *http.Request) (*CompareRequest, error) {
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(cp)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("Invalid JSON format")
 	}
 
 	if cp.OnlineJudge == nil {
