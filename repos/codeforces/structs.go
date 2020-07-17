@@ -24,6 +24,12 @@ type Submission struct {
 	Verdict string  `json:"verdict"`
 }
 
+type UserStatus struct {
+	Status  string       `json:"status"`
+	Comment string       `json:"comment"`
+	Result  []Submission `json:"result"`
+}
+
 func ToGeneralProblem(p Problem) entities.Problem {
 	var problemURL string
 	if p.ContestID >= 100000 {
