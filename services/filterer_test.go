@@ -7,7 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/alvinpiter/cp-helper/entities"
-	"github.com/alvinpiter/cp-helper/entities/mocks"
 )
 
 func TestApplyProblemFilter(t *testing.T) {
@@ -68,25 +67,21 @@ func TestApplyProblemFilter(t *testing.T) {
 		},
 	}
 
-	cfRepo := new(mocks.Repository)
-	svc := services.NewService()
-	svc.CodeforcesRepo = cfRepo
-
-	result1 := svc.ApplyProblemFilter(problems, filter1)
+	result1 := services.ApplyProblemFilter(problems, filter1)
 	assert.Equal(t, 1, len(result1))
 	assert.Equal(t, "1A", result1[0].ID)
 
-	result2 := svc.ApplyProblemFilter(problems, filter2)
+	result2 := services.ApplyProblemFilter(problems, filter2)
 	assert.Equal(t, 1, len(result2))
 	assert.Equal(t, "1B", result2[0].ID)
 
-	result3 := svc.ApplyProblemFilter(problems, filter3)
+	result3 := services.ApplyProblemFilter(problems, filter3)
 	assert.Equal(t, 3, len(result3))
 	assert.Equal(t, "1A", result3[0].ID)
 	assert.Equal(t, "1B", result3[1].ID)
 	assert.Equal(t, "1C", result3[2].ID)
 
-	result4 := svc.ApplyProblemFilter(problems, filter4)
+	result4 := services.ApplyProblemFilter(problems, filter4)
 	assert.Equal(t, 2, len(result4))
 	assert.Equal(t, "1A", result4[0].ID)
 	assert.Equal(t, "1B", result4[1].ID)

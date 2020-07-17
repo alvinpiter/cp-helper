@@ -13,7 +13,7 @@ import (
 
 type FilterFunc func(entities.Problem) bool
 
-func (s *Service) ApplyProblemFilter(problems []entities.Problem, fp *entities.FilterParameter) []entities.Problem {
+func ApplyProblemFilter(problems []entities.Problem, fp *entities.FilterParameter) []entities.Problem {
 	filterFunc := filterFuncBuilder(fp)
 	return doApplyProblemFilter(problems, filterFunc)
 }
