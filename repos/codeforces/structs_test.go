@@ -31,8 +31,6 @@ func TestToGeneralProblem(t *testing.T) {
 	}
 
 	p2 := codeforces.ToGeneralProblem(gymProblem)
-	assert.Equal(t, "102644A", p2.ID)
-	assert.Equal(t, "Problem A", p2.Name)
 	assert.Equal(t, 0, p2.Rating)
 	assert.Equal(t, 0, len(p2.Tags))
 	assert.Equal(t, "https://codeforces.com/gym/102644/problem/A", p2.URL)
@@ -59,6 +57,5 @@ func TestToGeneralSubmission(t *testing.T) {
 	}
 
 	sub2 := codeforces.ToGeneralSubmission(waSubmission)
-	assert.Equal(t, "1234A", sub2.Problem.ID)
 	assert.Equal(t, false, sub2.IsAccepted)
 }
