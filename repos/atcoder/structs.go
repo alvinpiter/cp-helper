@@ -21,6 +21,10 @@ type Submission struct {
 	Result    string `json:"result"`
 }
 
+type ProblemDifficulty struct {
+	Difficulty float64 `json:"difficulty"`
+}
+
 func ToGeneralProblem(p Problem) entities.Problem {
 	rating := int(p.Difficulty)
 	if rating < 0 {
