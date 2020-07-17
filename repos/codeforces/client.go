@@ -11,14 +11,6 @@ import (
 
 var codeforcesAPI = "https://codeforces.com/api/"
 
-/*
-Repository is a struct that represents an object that
-communicates with codeforces API.
-*/
-type Repository struct {
-	Client http.Client
-}
-
 func NewRepository() *Repository {
 	return &Repository{
 		Client: http.Client{},

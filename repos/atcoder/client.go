@@ -15,11 +15,6 @@ import (
 
 var atcoderAPI = "https://kenkoooo.com/atcoder/"
 
-type Repository struct {
-	Client   http.Client
-	Problems map[string]Problem
-}
-
 func NewRepository() *Repository {
 	return &Repository{
 		Client:   http.Client{},
@@ -56,46 +51,6 @@ func (r *Repository) populateProblemsCache() error {
 
 	r.Problems = mergeProblemResponse(problems, problemDifficulty)
 	return nil
-}
-
-/*
-AtCoder doesn't provide a single endpoint that returns problem detail and
-its difficulty, hence we need to hit two endpoints and merge the responses.
-
-The endpoint for problem detail is https://kenkoooo.com/atcoder/resources/merged-problems.json,
-and it has response like:
-[
-	{
-		"id": ...,
-		"contest_id": ...,
-		"title": ...
-	}
-]
-
-The endpoint for problem difficulty is https://kenkoooo.com/atcoder/resources/problem-models.json,
-and it has response like:
-{
-	<problem_id>: {
-		difficulty: ...
-	}
-}
-
-With this method, we intend to merge those responses and returns a map of Problem.
-The map's key is the problem ID.
-*/
-func mergeProblemResponse(problems []Problem, problemDifficulty map[string]ProblemDifficulty) map[string]Problem {
-	result := make(map[string]Problem)
-
-	for _, problem := range problems {
-		difficulty, exist := problemDifficulty[problem.ID]
-		if exist {
-			problem.Difficulty = difficulty.Difficulty
-		}
-
-		result[problem.ID] = problem
-	}
-
-	return result
 }
 
 func (r *Repository) GetSubmissions(handle string) ([]entities.Submission, error) {

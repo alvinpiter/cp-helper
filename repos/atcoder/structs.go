@@ -1,12 +1,13 @@
 package atcoder
 
 import (
-	"fmt"
-
-	"github.com/alvinpiter/cp-helper/entities"
+	"net/http"
 )
 
-var problemURLFormat = "https://atcoder.jp/contests/%s/tasks/%s"
+type Repository struct {
+	Client   http.Client
+	Problems map[string]Problem
+}
 
 type Problem struct {
 	ID         string `json:"id"`
@@ -23,31 +24,4 @@ type Submission struct {
 
 type ProblemDifficulty struct {
 	Difficulty float64 `json:"difficulty"`
-}
-
-func ToGeneralProblem(p Problem) entities.Problem {
-	rating := int(p.Difficulty)
-	if rating < 0 {
-		rating = 0
-	}
-
-	return entities.Problem{
-		ID:     p.ID,
-		Name:   p.Title,
-		Rating: rating,
-		Tags:   []string{},
-		URL:    fmt.Sprintf(problemURLFormat, p.ContestID, p.ID),
-	}
-}
-
-func ToGeneralSubmission(s Submission) entities.Submission {
-	accepted := false
-	if s.Result == "AC" {
-		accepted = true
-	}
-
-	return entities.Submission{
-		Problem:    ToGeneralProblem(s.Problem),
-		IsAccepted: accepted,
-	}
 }
