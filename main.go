@@ -4,13 +4,14 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/alvinpiter/cp-helper/handlers"
+	"github.com/alvinpiter/cp-helper/api"
 )
 
 func main() {
-	http.HandleFunc("/codeforces-problem-tags", handlers.GetCodeforcesProblemTags)
-	http.HandleFunc("/compare-codeforces", handlers.CompareCodeforces)
-	http.HandleFunc("/compare-atcoder", handlers.CompareAtCoder)
+	app := api.New()
+	http.HandleFunc("/healthz", app.HealthzHandler)
+	http.HandleFunc("/codeforces-problem-tags", app.CodeforcesProblemTagsHandler)
+	http.HandleFunc("/compare", app.CompareHandler)
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }

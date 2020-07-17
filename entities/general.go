@@ -1,16 +1,20 @@
 package entities
 
 type Problem struct {
-	ID     string
-	Name   string
-	Rating int
-	Tags   []string
-	URL    string
+	ID     string   `json:"id"`
+	Name   string   `json:"name"`
+	Rating int      `json:"rating"`
+	Tags   []string `json:"tags"`
+	URL    string   `json:"url"`
 }
 
 type Submission struct {
 	Problem    Problem
 	IsAccepted bool
+}
+
+type Service interface {
+	CompareWithFilter(string, string, string, *FilterParameter) ([]Problem, error)
 }
 
 /*
@@ -34,41 +38,4 @@ type TagsFilterParameter struct {
 type FilterParameter struct {
 	Rating *RatingFilterParameter `json:"rating"`
 	Tags   *TagsFilterParameter   `json:"tags"`
-}
-
-type RequestParameter struct {
-	Handle      string          `json:"handle"`
-	RivalHandle string          `json:"rival_handle"`
-	Filter      FilterParameter `json:"filter"`
-}
-
-type ProblemResponse struct {
-	ID     string   `json:"id"`
-	Name   string   `json:"name"`
-	Rating int      `json:"rating"`
-	Tags   []string `json:"tags"`
-	URL    string   `json:"url"`
-}
-
-type CompareResponse struct {
-	Problems []ProblemResponse `json:"problems"`
-}
-
-func NewCompareResponse(problems []Problem) CompareResponse {
-	res := []ProblemResponse{}
-	// for _, p := range problems {
-	// 	pr := ProblemResponse{
-	// 		ID:     p.GetID(),
-	// 		Name:   p.GetName(),
-	// 		Rating: p.GetRating(),
-	// 		Tags:   p.GetTags(),
-	// 		URL:    p.GetURL(),
-	// 	}
-
-	// 	res = append(res, pr)
-	// }
-
-	return CompareResponse{
-		Problems: res,
-	}
 }
