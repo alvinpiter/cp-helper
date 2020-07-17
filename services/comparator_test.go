@@ -14,40 +14,33 @@ func TestCompare(t *testing.T) {
 	handle1 := "handle1"
 	handle2 := "handle2"
 
-	problem1 := &entities.CodeforcesProblem{
-		ContestID: 1,
-		Index:     "A",
-	}
-
-	problem2 := &entities.CodeforcesProblem{
-		ContestID: 1,
-		Index:     "B",
-	}
-
-	problem3 := &entities.CodeforcesProblem{
-		ContestID: 1,
-		Index:     "C",
-	}
+	problem1 := entities.Problem{ID: "1A"}
+	problem2 := entities.Problem{ID: "1B"}
+	problem3 := entities.Problem{ID: "1C"}
 
 	submissions1 := []entities.Submission{
-		&entities.CodeforcesSubmission{
-			Problem: problem1,
-			Verdict: "OK",
+		entities.Submission{
+			Problem:    problem1,
+			IsAccepted: true,
 		},
-		&entities.CodeforcesSubmission{
-			Problem: problem2,
-			Verdict: "OK",
+		entities.Submission{
+			Problem:    problem2,
+			IsAccepted: true,
 		},
 	}
 
 	submissions2 := []entities.Submission{
-		&entities.CodeforcesSubmission{
-			Problem: problem2,
-			Verdict: "OK",
+		entities.Submission{
+			Problem:    problem2,
+			IsAccepted: true,
 		},
-		&entities.CodeforcesSubmission{
-			Problem: problem3,
-			Verdict: "OK",
+		entities.Submission{
+			Problem:    problem3,
+			IsAccepted: true,
+		},
+		entities.Submission{
+			Problem:    problem3,
+			IsAccepted: true,
 		},
 	}
 
@@ -55,11 +48,14 @@ func TestCompare(t *testing.T) {
 	cfRepo.On("GetSubmissions", handle1).Return(submissions1, nil)
 	cfRepo.On("GetSubmissions", handle2).Return(submissions2, nil)
 
-	svc := services.NewService()
+	svc := services.New()
 	svc.CodeforcesRepo = cfRepo
 
 	result, _ := svc.Compare("codeforces", handle1, handle2)
 
 	assert.Equal(t, 1, len(result))
-	assert.Equal(t, "1C", result[0].GetID())
+	assert.Equal(t, "1C", result[0].ID)
+
+	_, err := svc.Compare("uva", handle1, handle2)
+	assert.NotNil(t, err)
 }

@@ -3,7 +3,7 @@ TODO:
 * Fix dependency to API, i.e if API down, we shouldn't
 */
 
-package nethttp
+package atcoder
 
 import (
 	"encoding/json"
@@ -11,31 +11,25 @@ import (
 	"net/http"
 
 	"github.com/alvinpiter/cp-helper/entities"
-	"github.com/alvinpiter/cp-helper/util"
 )
 
 var atcoderAPI = "https://kenkoooo.com/atcoder/"
 
-type AtCoderRepository struct {
-	Client   http.Client
-	Problems map[string]entities.Problem
-}
-
-func NewAtCoderRespository() *AtCoderRepository {
-	return &AtCoderRepository{
+func NewRepository() *Repository {
+	return &Repository{
 		Client:   http.Client{},
-		Problems: make(map[string]entities.Problem),
+		Problems: make(map[string]Problem),
 	}
 }
 
-func (r *AtCoderRepository) cacheProblems() error {
+func (r *Repository) populateProblemsCache() error {
 	urlProblemDetail := fmt.Sprintf("%sresources/merged-problems.json", atcoderAPI)
 	resp1, err := r.Client.Get(urlProblemDetail)
 	if err != nil {
 		return err
 	}
 
-	problems := []*entities.AtCoderProblem{}
+	problems := []Problem{}
 	dec1 := json.NewDecoder(resp1.Body)
 	err = dec1.Decode(&problems)
 	if err != nil {
@@ -48,36 +42,20 @@ func (r *AtCoderRepository) cacheProblems() error {
 		return err
 	}
 
-	problemDifficulty := make(map[string]entities.AtCoderProblemDifficulty)
+	problemDifficulty := make(map[string]ProblemDifficulty)
 	dec2 := json.NewDecoder(resp2.Body)
 	err = dec2.Decode(&problemDifficulty)
 	if err != nil {
 		return err
 	}
 
-	r.Problems = util.MergeAtCoderProblemResponse(problems, problemDifficulty)
+	r.Problems = mergeProblemResponse(problems, problemDifficulty)
 	return nil
 }
 
-func (r *AtCoderRepository) GetProblems() ([]entities.Problem, error) {
+func (r *Repository) GetSubmissions(handle string) ([]entities.Submission, error) {
 	if len(r.Problems) == 0 {
-		err := r.cacheProblems()
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	result := []entities.Problem{}
-	for _, problem := range r.Problems {
-		result = append(result, problem)
-	}
-
-	return result, nil
-}
-
-func (r *AtCoderRepository) GetSubmissions(handle string) ([]entities.Submission, error) {
-	if len(r.Problems) == 0 {
-		err := r.cacheProblems()
+		err := r.populateProblemsCache()
 		if err != nil {
 			return nil, err
 		}
@@ -90,7 +68,7 @@ func (r *AtCoderRepository) GetSubmissions(handle string) ([]entities.Submission
 		return nil, err
 	}
 
-	submissions := []*entities.AtCoderSubmission{}
+	submissions := []Submission{}
 	decoder := json.NewDecoder(resp.Body)
 	err = decoder.Decode(&submissions)
 	if err != nil {
@@ -99,8 +77,8 @@ func (r *AtCoderRepository) GetSubmissions(handle string) ([]entities.Submission
 
 	subs := []entities.Submission{}
 	for _, sub := range submissions {
-		sub.Problem = r.Problems[sub.ProblemID].(*entities.AtCoderProblem)
-		subs = append(subs, sub)
+		sub.Problem = r.Problems[sub.ProblemID]
+		subs = append(subs, ToGeneralSubmission(sub))
 	}
 
 	return subs, nil
