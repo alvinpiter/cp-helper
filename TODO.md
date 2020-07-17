@@ -18,3 +18,5 @@ to compare error object than error message.
 - Find a better way to perform validation
 - Find a better way to handle unmarshal error
 - Gitlab CI. Automate the deployment.
+- Add request context
+- Some structs has pointer fields, while some has value fields.

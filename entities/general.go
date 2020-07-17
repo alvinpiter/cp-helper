@@ -31,9 +31,9 @@ type TagsFilterParameter struct {
 	Values []string `json:"values"`
 }
 
-type FilterParameter interface {
-	GetRatingFilterParameter() *RatingFilterParameter
-	GetTagsFilterParameter() *TagsFilterParameter
+type FilterParameter struct {
+	Rating *RatingFilterParameter `json:"rating"`
+	Tags   *TagsFilterParameter   `json:"tags"`
 }
 
 type RequestParameter struct {
