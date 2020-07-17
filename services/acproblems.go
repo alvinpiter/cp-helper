@@ -26,10 +26,10 @@ func (s *Service) GetAcceptedProblems(oj, handle string) ([]entities.Problem, er
 	acProblems := []entities.Problem{}
 	seenID := make(map[string]bool) //To avoid duplicates
 	for _, submission := range submissions {
-		if submission.IsAccepted() {
-			problemID := submission.GetProblem().GetID()
+		if submission.IsAccepted {
+			problemID := submission.Problem.ID
 			if _, seen := seenID[problemID]; !seen {
-				acProblems = append(acProblems, submission.GetProblem())
+				acProblems = append(acProblems, submission.Problem)
 				seenID[problemID] = true
 			}
 		}

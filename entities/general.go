@@ -18,7 +18,6 @@ Repository is an interface that represents an object that
 communicates with online judge API
 */
 type Repository interface {
-	GetProblems() ([]Problem, error)
 	GetSubmissions(string) ([]Submission, error)
 }
 

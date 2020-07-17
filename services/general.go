@@ -2,7 +2,8 @@ package services
 
 import (
 	"github.com/alvinpiter/cp-helper/entities"
-	"github.com/alvinpiter/cp-helper/repos/nethttp"
+	"github.com/alvinpiter/cp-helper/repos/atcoder"
+	"github.com/alvinpiter/cp-helper/repos/codeforces"
 )
 
 type Service struct {
@@ -11,8 +12,8 @@ type Service struct {
 }
 
 func NewService() *Service {
-	cfRepo := nethttp.NewCodeforcesRepository()
-	atcRepo := nethttp.NewAtCoderRespository()
+	cfRepo := codeforces.NewRepository()
+	atcRepo := atcoder.NewRepository()
 
 	return &Service{
 		CodeforcesRepo: cfRepo,

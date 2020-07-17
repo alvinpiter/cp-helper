@@ -32,12 +32,12 @@ func (s *Service) Compare(oj, handle1, handle2 string) ([]entities.Problem, erro
 
 	acProblemIdsMap1 := make(map[string]bool)
 	for _, p := range acProblems1 {
-		acProblemIdsMap1[p.GetID()] = true
+		acProblemIdsMap1[p.ID] = true
 	}
 
 	diffs := []entities.Problem{}
 	for _, p := range acProblems2 {
-		if _, exist := acProblemIdsMap1[p.GetID()]; exist == false {
+		if _, exist := acProblemIdsMap1[p.ID]; exist == false {
 			diffs = append(diffs, p)
 		}
 	}

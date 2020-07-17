@@ -11,25 +11,22 @@ import (
 )
 
 func TestApplyProblemFilter(t *testing.T) {
-	problem1 := &entities.CodeforcesProblem{
-		ContestID: 1,
-		Index:     "A",
-		Rating:    1900,
-		Tags:      []string{"implementation", "math"},
+	problem1 := entities.Problem{
+		ID:     "1A",
+		Rating: 1900,
+		Tags:   []string{"implementation", "math"},
 	}
 
-	problem2 := &entities.CodeforcesProblem{
-		ContestID: 1,
-		Index:     "B",
-		Rating:    2000,
-		Tags:      []string{"implementation", "math"},
+	problem2 := entities.Problem{
+		ID:     "1B",
+		Rating: 2000,
+		Tags:   []string{"implementation", "math"},
 	}
 
-	problem3 := &entities.CodeforcesProblem{
-		ContestID: 1,
-		Index:     "C",
-		Rating:    2100,
-		Tags:      []string{"implementation"},
+	problem3 := entities.Problem{
+		ID:     "1C",
+		Rating: 2100,
+		Tags:   []string{"implementation"},
 	}
 
 	problems := []entities.Problem{problem1, problem2, problem3}
@@ -77,20 +74,20 @@ func TestApplyProblemFilter(t *testing.T) {
 
 	result1 := svc.ApplyProblemFilter(problems, filter1)
 	assert.Equal(t, 1, len(result1))
-	assert.Equal(t, "1A", result1[0].GetID())
+	assert.Equal(t, "1A", result1[0].ID)
 
 	result2 := svc.ApplyProblemFilter(problems, filter2)
 	assert.Equal(t, 1, len(result2))
-	assert.Equal(t, "1B", result2[0].GetID())
+	assert.Equal(t, "1B", result2[0].ID)
 
 	result3 := svc.ApplyProblemFilter(problems, filter3)
 	assert.Equal(t, 3, len(result3))
-	assert.Equal(t, "1A", result3[0].GetID())
-	assert.Equal(t, "1B", result3[1].GetID())
-	assert.Equal(t, "1C", result3[2].GetID())
+	assert.Equal(t, "1A", result3[0].ID)
+	assert.Equal(t, "1B", result3[1].ID)
+	assert.Equal(t, "1C", result3[2].ID)
 
 	result4 := svc.ApplyProblemFilter(problems, filter4)
 	assert.Equal(t, 2, len(result4))
-	assert.Equal(t, "1A", result4[0].GetID())
-	assert.Equal(t, "1B", result4[1].GetID())
+	assert.Equal(t, "1A", result4[0].ID)
+	assert.Equal(t, "1B", result4[1].ID)
 }

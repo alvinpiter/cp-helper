@@ -60,7 +60,7 @@ func tagsFilterFuncBuilder(tagsFilter *entities.TagsFilterParameter) FilterFunc 
 				tagMap[tag] = true
 			}
 
-			for _, tag := range p.GetTags() {
+			for _, tag := range p.Tags {
 				if _, exist := tagMap[tag]; exist {
 					return true
 				}
@@ -73,7 +73,7 @@ func tagsFilterFuncBuilder(tagsFilter *entities.TagsFilterParameter) FilterFunc 
 	//"and" mode
 	return func(p entities.Problem) bool {
 		tagMap := make(map[string]bool)
-		for _, tag := range p.GetTags() {
+		for _, tag := range p.Tags {
 			tagMap[tag] = true
 		}
 
@@ -103,6 +103,6 @@ func ratingFilterFuncBuilder(ratingFilter *entities.RatingFilterParameter) Filte
 	}
 
 	return func(p entities.Problem) bool {
-		return p.GetRating() >= minRating && p.GetRating() <= maxRating
+		return p.Rating >= minRating && p.Rating <= maxRating
 	}
 }
