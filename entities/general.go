@@ -1,22 +1,16 @@
 package entities
 
-/*
-Problem is an interface that represents an online judge problem
-*/
-type Problem interface {
-	GetID() string
-	GetName() string
-	GetRating() int
-	GetTags() []string
-	GetURL() string
+type Problem struct {
+	ID     string
+	Name   string
+	Rating int
+	Tags   []string
+	URL    string
 }
 
-/*
-Submission is an interface that represents an online judge submission
-*/
-type Submission interface {
-	GetProblem() Problem
-	IsAccepted() bool
+type Submission struct {
+	Problem    Problem
+	IsAccepted bool
 }
 
 /*
@@ -63,17 +57,17 @@ type CompareResponse struct {
 
 func NewCompareResponse(problems []Problem) CompareResponse {
 	res := []ProblemResponse{}
-	for _, p := range problems {
-		pr := ProblemResponse{
-			ID:     p.GetID(),
-			Name:   p.GetName(),
-			Rating: p.GetRating(),
-			Tags:   p.GetTags(),
-			URL:    p.GetURL(),
-		}
+	// for _, p := range problems {
+	// 	pr := ProblemResponse{
+	// 		ID:     p.GetID(),
+	// 		Name:   p.GetName(),
+	// 		Rating: p.GetRating(),
+	// 		Tags:   p.GetTags(),
+	// 		URL:    p.GetURL(),
+	// 	}
 
-		res = append(res, pr)
-	}
+	// 	res = append(res, pr)
+	// }
 
 	return CompareResponse{
 		Problems: res,
