@@ -11,7 +11,7 @@ type Service struct {
 	AtCoderRepo    entities.Repository
 }
 
-func NewService() *Service {
+func New() *Service {
 	cfRepo := codeforces.NewRepository()
 	atcRepo := atcoder.NewRepository()
 
