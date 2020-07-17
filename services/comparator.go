@@ -11,6 +11,15 @@ type channelItem struct {
 	Error error
 }
 
+func (s *Service) CompareWithFilter(oj, handle1, handle2 string, fp *entities.FilterParameter) ([]entities.Problem, error) {
+	problems, err := s.Compare(oj, handle1, handle2)
+	if err != nil {
+		return nil, err
+	}
+
+	return ApplyProblemFilter(problems, fp), nil
+}
+
 /*
 Compare returns a list of problems that is solved by handle2 but
 not solved by handle1
