@@ -38,6 +38,13 @@ func (a *API) CodeforcesProblemTagsHandler(w http.ResponseWriter, r *http.Reques
 }
 
 func (a *API) CompareHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		(w).Header().Set("Access-Control-Allow-Origin", "*")
+		(w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		(w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		return
+	}
+
 	if r.Method != "POST" {
 		writeJSON(w, http.StatusNotFound, nil)
 		return

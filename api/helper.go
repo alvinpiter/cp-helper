@@ -18,6 +18,7 @@ func writeJSON(w http.ResponseWriter, status int, data interface{}) {
 	jsonData, _ := json.Marshal(data)
 
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(status)
 	w.Write(jsonData)
 }
