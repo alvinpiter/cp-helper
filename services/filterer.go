@@ -64,7 +64,7 @@ func tagsFilterFuncBuilder(tagsFilter *entities.TagsFilterParameter) FilterFunc 
 				}
 			}
 
-			return true
+			return false
 		}
 	}
 
