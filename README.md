@@ -4,7 +4,7 @@
 
 The front-end implementation can be seen here: https://github.com/teddypiter/code-compare
 
-The website can be accessed here: https://https://boiling-tundra-04466.herokuapp.com/
+The website can be accessed here: https://boiling-tundra-04466.herokuapp.com/
 
 ## Endpoint
 
